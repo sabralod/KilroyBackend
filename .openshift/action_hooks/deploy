@@ -7,11 +7,8 @@ set -x
 if [ ! -d $OPENSHIFT_DATA_DIR/jdk1.8.0_20 ]
 	then 
 		cd $OPENSHIFT_DATA_DIR
-#		wget http://www.java.net/download/jdk8u20/archive/b17/binaries/jdk-8u20-ea-bin-b17-linux-x64-04_jun_2014.tar.gz
-wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u5-b13/jdk-8u5-linux-x64.tar.gz
-tar -zxf jdk-8u5-linux-x64.tar.gz
-
-#		tar xvf *.tar.gz 
+		wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u5-b13/jdk-8u5-linux-x64.tar.gz
+		tar -zxf jdk-8u5-linux-x64.tar.gz
 		rm -f *.tar.gz
 fi
 
