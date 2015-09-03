@@ -1,6 +1,5 @@
 package de.ur.mi.kilroy.backend;
 
-import com.beust.jcommander.JCommander;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sql2o.Sql2o;
