@@ -23,6 +23,9 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/ `kilroy_db` /*!40100 DEFAULT CHARACTER 
 
 USE `kilroy_db`;
 
+// DB User
+grant all privileges on *.* to 'kilroy'@'localhost';
+
 --
 -- Table structure for table `comments`
 --
@@ -77,6 +80,12 @@ LOCK TABLES `posts` WRITE;
 INSERT INTO `posts` VALUES (1,'abc','blablabla','2015-08-28'),(2,'test 1','test test test 1','2015-09-02'),(3,'test 2','test test test 2','2015-09-03');
 /*!40000 ALTER TABLE `posts` ENABLE KEYS */;
 UNLOCK TABLES;
+
+
+// DB User
+CREATE user 'kilroy'@'localhost' IDENTIFIED BY 'kilroywashere';
+grant all privileges on *.* to 'kilroy'@'localhost';
+
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
