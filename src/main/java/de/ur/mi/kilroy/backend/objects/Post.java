@@ -1,6 +1,6 @@
 package de.ur.mi.kilroy.backend.objects;
 
-import java.util.ArrayList;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -13,6 +13,24 @@ public class Post {
     private String content;
     private Date publishing_date;
     private List<Comment> comments;
+    private BigDecimal lat;
+    private BigDecimal lng;
+
+    public BigDecimal getLat() {
+        return lat;
+    }
+
+    public void setLat(BigDecimal lat) {
+        this.lat = lat;
+    }
+
+    public BigDecimal getLng() {
+        return lng;
+    }
+
+    public void setLng(BigDecimal lng) {
+        this.lng = lng;
+    }
 
     public List<Comment> getComments() {
         return comments;

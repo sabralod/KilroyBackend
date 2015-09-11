@@ -7,6 +7,7 @@ import de.ur.mi.kilroy.backend.objects.Comment;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,7 +24,7 @@ public class KilroyService implements Model {
     }
 
     public Post createPost(String body) {
-        String sql = "insert into posts(title, content, publishing_date) VALUES (:title, :content, :date)";
+        String sql = "insert into posts(title, content, publishing_date, lat, lng) VALUES (:title, :content, :date, :lat, :lng)";
 
         Post post = new Gson().fromJson(body, Post.class);
         post.setPublishing_date(new Date());
@@ -34,6 +35,8 @@ public class KilroyService implements Model {
                     .addParameter("title", post.getTitle())
                     .addParameter("content", post.getContent())
                     .addParameter("date", post.getPublishing_date())
+                    .addParameter("lat", BigDecimal.class, post.getLat())
+                    .addParameter("lng", BigDecimal.class, post.getLng())
                     .executeUpdate()
                     .getKey(int.class);
             post.setId(post_id);
