@@ -20,14 +20,9 @@ public class KilroyResource {
 
     private void setupEndpoints() {
 
-        post(API_CONTEXT + "/posts", "application/json", (request, response) ->
-                kilroyService.createPost(request.body())
-//        {
-//            kilroyService.createPost(request.body());
-//            response.status(201);
-//            return response;
-//        }
-                , new JsonTransformer());
+        post(API_CONTEXT + "/posts", "application/json", (request, response)
+                        -> kilroyService.createPost(request.body()), new JsonTransformer()
+        );
 
         get(API_CONTEXT + "/posts", "application/json", (request, response)
                         -> kilroyService.getAllPosts(), new JsonTransformer()
@@ -37,13 +32,8 @@ public class KilroyResource {
                         -> kilroyService.getAllCommentsOn(request.params(":id")), new JsonTransformer()
         );
 
-        post(API_CONTEXT + "/posts/:id/comments", "application/json", (request, response) ->
-                kilroyService.createComment(request.body())
-//        {
-//            kilroyService.createComment(request.body());
-//            response.status(201);
-//            return response;
-//        }
-                , new JsonTransformer());
+        post(API_CONTEXT + "/posts/:id/comments", "application/json", (request, response)
+                        -> kilroyService.createComment(request.body()), new JsonTransformer()
+        );
     }
 }

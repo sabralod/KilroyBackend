@@ -7,6 +7,7 @@ import de.ur.mi.kilroy.backend.objects.Comment;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -71,6 +72,9 @@ public class KilroyService implements Model {
         try {
             List<Post> posts = conn.createQuery(sql)
                     .executeAndFetch(Post.class);
+            for (Post post : posts) {
+                post.setComments(getAllCommentsOn("" + post.getId()));
+            }
             return posts;
         } finally {
             conn.close();

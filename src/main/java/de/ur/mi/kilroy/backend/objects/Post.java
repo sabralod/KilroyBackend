@@ -1,6 +1,8 @@
 package de.ur.mi.kilroy.backend.objects;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by simon on 02/09/15.
@@ -10,6 +12,15 @@ public class Post {
     private String title;
     private String content;
     private Date publishing_date;
+    private List<Comment> comments;
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
 
     public int getId() {
         return id;
