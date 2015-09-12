@@ -15,6 +15,15 @@ public class Post {
     private List<Comment> comments;
     private BigDecimal lat;
     private BigDecimal lng;
+    private String nfc_id;
+
+    public String getNfc_id() {
+        return nfc_id;
+    }
+
+    public void setNfc_id(String nfc_id) {
+        this.nfc_id = nfc_id;
+    }
 
     public BigDecimal getLat() {
         return lat;

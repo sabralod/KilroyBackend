@@ -24,8 +24,9 @@ public class KilroyService implements Model {
     }
 
     public Post createPost(String body) {
-        String sql = "insert into posts(title, content, publishing_date, lat, lng) VALUES (:title, :content, :date, :lat, :lng)";
+        String sql = "insert into posts(title, content, publishing_date, lat, lng, nfc_id) VALUES (:title, :content, :date, :lat, :lng, :nfc_id)";
 
+        // TODO: check nfc_id, have to be valid with char(36).
         Post post = new Gson().fromJson(body, Post.class);
         post.setPublishing_date(new Date());
 
@@ -37,6 +38,7 @@ public class KilroyService implements Model {
                     .addParameter("date", post.getPublishing_date())
                     .addParameter("lat", BigDecimal.class, post.getLat())
                     .addParameter("lng", BigDecimal.class, post.getLng())
+                    .addParameter("nfc_id", post.getNfc_id())
                     .executeUpdate()
                     .getKey(int.class);
             post.setId(post_id);
