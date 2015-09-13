@@ -110,4 +110,22 @@ public class KilroyService implements Model {
             conn.close();
         }
     }
+
+    @Override
+    public Post getPostWithUuid(String uuid) {
+        String sql = "select * from posts where nfc_id=:nfc_id";
+        Connection conn = sql2o.open();
+        try {
+            List<Post> posts = conn.createQuery(sql)
+                    .addParameter("nfc_id", uuid)
+                    .executeAndFetch(Post.class);
+            for (Post post : posts) {
+                post.setComments(getAllCommentsOn("" + post.getId()));
+                return post;
+            }
+            return null;
+        } finally {
+            conn.close();
+        }
+    }
 }

@@ -20,4 +20,6 @@ public interface Model {
     List<Comment> getAllCommentsOn(String post_id);
 
     boolean existPost(String post_id);
+
+    Post getPostWithUuid(String uuid);
 }

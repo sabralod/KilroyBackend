@@ -28,6 +28,10 @@ public class KilroyResource {
                         -> kilroyService.getAllPosts(), new JsonTransformer()
         );
 
+        get(API_CONTEXT + "/post/:uuid", "application/json", (request, response)
+                        -> kilroyService.getPostWithUuid(request.params(":uuid")), new JsonTransformer()
+        );
+
         get(API_CONTEXT + "/posts/:id/comments", "application/json", (request, response)
                         -> kilroyService.getAllCommentsOn(request.params(":id")), new JsonTransformer()
         );
