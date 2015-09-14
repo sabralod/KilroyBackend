@@ -28,15 +28,19 @@ public class KilroyResource {
                         -> kilroyService.getAllPosts(), new JsonTransformer()
         );
 
-        get(API_CONTEXT + "/post/:uuid", "application/json", (request, response)
+        get(API_CONTEXT + "/post/uuid/:uuid", "application/json", (request, response)
                         -> kilroyService.getPostWithUuid(request.params(":uuid")), new JsonTransformer()
         );
 
-        get(API_CONTEXT + "/posts/:id/comments", "application/json", (request, response)
+        get(API_CONTEXT + "/post/id/:id", "application/json", (request, response)
+                        -> kilroyService.getPost(request.params(":id")), new JsonTransformer()
+        );
+
+        get(API_CONTEXT + "/posts/id/:id/comments", "application/json", (request, response)
                         -> kilroyService.getAllCommentsOn(request.params(":id")), new JsonTransformer()
         );
 
-        post(API_CONTEXT + "/posts/:id/comments", "application/json", (request, response)
+        post(API_CONTEXT + "/posts/id/:id/comments", "application/json", (request, response)
                         -> kilroyService.createComment(request.body()), new JsonTransformer()
         );
     }

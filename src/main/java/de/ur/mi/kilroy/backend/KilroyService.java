@@ -99,7 +99,7 @@ public class KilroyService implements Model {
     }
 
     public boolean existPost(String post_id) {
-        String sql = "select * from posts where post_id=:post_id";
+        String sql = "select * from posts where id=:post_id";
         Connection conn = sql2o.open();
         try {
             List<Post> posts = conn.createQuery(sql)
@@ -124,6 +124,19 @@ public class KilroyService implements Model {
                 return post;
             }
             return null;
+        } finally {
+            conn.close();
+        }
+    }
+
+    public Post getPost(String post_id) {
+        String sql = "select * from posts where id=:post_id";
+        Connection conn = sql2o.open();
+        try {
+            List<Post> posts = conn.createQuery(sql)
+                    .addParameter("post_id", post_id)
+                    .executeAndFetch(Post.class);
+            return posts.size() > 0 ? posts.get(0) : null;
         } finally {
             conn.close();
         }
