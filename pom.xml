@@ -11,8 +11,6 @@
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <!--Comment here, if you want run kilroybackend locally-->
-        <!--<maven.compiler.executable>${env.$OPENSHIFT_DATA_DIR}jdk1.8.0_20/bin/javac</maven.compiler.executable>-->
     </properties>
 
     <dependencies>
