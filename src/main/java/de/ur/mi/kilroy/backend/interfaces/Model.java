@@ -9,10 +9,8 @@ import java.util.List;
  * Created by simon on 02/09/15.
  */
 public interface Model {
-//    int createPost(String body);
     Post createPost(String body);
 
-//    int createComment(String body);
     Comment createComment(String body);
 
     List<Post> getAllPosts();

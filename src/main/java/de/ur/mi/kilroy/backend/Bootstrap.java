@@ -2,14 +2,13 @@ package de.ur.mi.kilroy.backend;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.slf4j.Marker;
 import org.sql2o.Sql2o;
 
 import static spark.SparkBase.*;
 
-/**
- * Created by simon on 02/09/15.
- */
+// Main class.
+// Set environment variables.
+
 public class Bootstrap {
 
     private static final Logger logger = LoggerFactory.getLogger(Bootstrap.class.getCanonicalName());
@@ -18,10 +17,12 @@ public class Bootstrap {
     private static final int PORT = System.getenv("OPENSHIFT_DIY_PORT") != null ? Integer.parseInt(System.getenv("OPENSHIFT_DIY_PORT")) : 8080;
 
     public static void main(String[] args) throws Exception {
+//        Setup spark.
         ipAddress(IP_ADDRESS);
         port(PORT);
         staticFileLocation("/public");
 
+//        Set openshift variables when deployed or set local variables when running local.
         String host = System.getenv("OPENSHIFT_MYSQL_DB_HOST");
         int port = 3306;
         String dbName = "kilroy_db";
@@ -36,11 +37,13 @@ public class Bootstrap {
             host = "localhost";
         }
 
+//        Initialize database connection.
         logger.info("Connect database to: jdbc:mysql://" + host + ":" + port + "/" + dbName);
         Sql2o sql2o = new Sql2o("jdbc:mysql://" + host + ":" + port + "/" + dbName,
                 username, password);
         logger.info("Connected");
 
+//        Start service.
         new KilroyResource(new KilroyService(sql2o));
     }
 }

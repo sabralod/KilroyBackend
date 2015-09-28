@@ -1,20 +1,17 @@
 package de.ur.mi.kilroy.backend;
 
 import com.google.gson.Gson;
-import de.ur.mi.kilroy.backend.objects.Post;
 import de.ur.mi.kilroy.backend.interfaces.Model;
 import de.ur.mi.kilroy.backend.objects.Comment;
+import de.ur.mi.kilroy.backend.objects.Post;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by simon on 02/09/15.
- */
+// Database service.
 public class KilroyService implements Model {
 
     private Sql2o sql2o;
@@ -23,13 +20,17 @@ public class KilroyService implements Model {
         this.sql2o = sql2o;
     }
 
+//    Create new post.
     public Post createPost(String body) {
         String sql = "insert into posts(title, content, publishing_date, lat, lng, nfc_id) VALUES (:title, :content, :date, :lat, :lng, :nfc_id)";
 
-        // TODO: check nfc_id, have to be valid with char(36).
+//        Parsing request body with gson.
         Post post = new Gson().fromJson(body, Post.class);
+
+//        Set today.
         post.setPublishing_date(new Date());
 
+//        Connect and execute query to database.
         Connection conn = sql2o.open();
         try {
             int post_id = conn.createQuery(sql, true)
@@ -41,6 +42,7 @@ public class KilroyService implements Model {
                     .addParameter("nfc_id", post.getNfc_id())
                     .executeUpdate()
                     .getKey(int.class);
+//            Execute successfully, add id and return Post.
             post.setId(post_id);
             return post;
         } finally {
@@ -48,13 +50,17 @@ public class KilroyService implements Model {
         }
     }
 
+//    Create a comment.
     public Comment createComment(String body) {
         String sql = "insert into comments(post_id, author, content, submission_date) VALUES (:post_id, :author, :content, :date)";
 
+//        Parsing request body with gson.
         Comment comment = new Gson().fromJson(body, Comment.class);
+
+//        Set today.
         comment.setSubmission_date(new Date());
 
-
+//        Connect and execute query to database.
         Connection conn = sql2o.open();
         try {
             int comment_id = conn.createQuery(sql, true)
@@ -64,6 +70,7 @@ public class KilroyService implements Model {
                     .addParameter("date", comment.getSubmission_date())
                     .executeUpdate()
                     .getKey(int.class);
+//            Execute successfully, add id and return Comment.
             comment.setId(comment_id);
             return comment;
         } finally {
@@ -71,12 +78,14 @@ public class KilroyService implements Model {
         }
     }
 
+//    Get all posts.
     public List<Post> getAllPosts() {
         String sql = "select * from posts";
         Connection conn = sql2o.open();
         try {
             List<Post> posts = conn.createQuery(sql)
                     .executeAndFetch(Post.class);
+//            Set comments and return post list.
             for (Post post : posts) {
                 post.setComments(getAllCommentsOn("" + post.getId()));
             }
@@ -86,6 +95,7 @@ public class KilroyService implements Model {
         }
     }
 
+//    Get all comments from post wiht post_id.
     public List<Comment> getAllCommentsOn(String post_id) {
         String sql = "select * from comments where post_id=:post_id";
         Connection conn = sql2o.open();
@@ -98,6 +108,7 @@ public class KilroyService implements Model {
         }
     }
 
+//    Check post.
     public boolean existPost(String post_id) {
         String sql = "select * from posts where id=:post_id";
         Connection conn = sql2o.open();
@@ -111,7 +122,7 @@ public class KilroyService implements Model {
         }
     }
 
-    @Override
+//    Get post with uuid.
     public Post getPostWithUuid(String uuid) {
         String sql = "select * from posts where nfc_id=:nfc_id";
         Connection conn = sql2o.open();
@@ -119,6 +130,7 @@ public class KilroyService implements Model {
             List<Post> posts = conn.createQuery(sql)
                     .addParameter("nfc_id", uuid)
                     .executeAndFetch(Post.class);
+//            Set comments and return post. If query failed, return null.
             for (Post post : posts) {
                 post.setComments(getAllCommentsOn("" + post.getId()));
                 return post;
@@ -129,6 +141,7 @@ public class KilroyService implements Model {
         }
     }
 
+//    Get post with id.
     public Post getPost(String post_id) {
         String sql = "select * from posts where id=:post_id";
         Connection conn = sql2o.open();

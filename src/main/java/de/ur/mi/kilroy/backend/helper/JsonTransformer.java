@@ -6,15 +6,13 @@ import spark.Response;
 import spark.ResponseTransformer;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
-/**
- * Created by simon on 02/09/15.
- */
+// Generating Response with gson.
 public class JsonTransformer implements ResponseTransformer {
 
     private Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 
+//    Generate response from object.
     public String render(Object model) throws Exception {
         if (model instanceof Response) {
             return gson.toJson(new ArrayList<>());
