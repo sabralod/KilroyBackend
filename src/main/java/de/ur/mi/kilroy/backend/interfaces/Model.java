@@ -5,9 +5,6 @@ import de.ur.mi.kilroy.backend.objects.Post;
 
 import java.util.List;
 
-/**
- * Created by simon on 02/09/15.
- */
 public interface Model {
     Post createPost(String body);
 
